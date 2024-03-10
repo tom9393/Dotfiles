@@ -1,8 +1,6 @@
 sleep 1
 redshift -P -O 3500
 
-export QT_XCB_GL_INTEGRATION=none
-
 if ! command -v nvim > /dev/null 2>&1; then
 	export EDITOR=$(which vi)
 else
