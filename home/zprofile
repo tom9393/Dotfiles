@@ -1,8 +1,8 @@
-sleep 1
-redshift -P -O 3500
-
 if ! command -v nvim > /dev/null 2>&1; then
 	export EDITOR=$(which vi)
 else
 	export EDITOR=$(which nvim)
 fi
+
+sleep 1
+redshift -P -O 3500
