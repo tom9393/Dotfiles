@@ -11,9 +11,21 @@ open_editor() {
 	$EDITOR
 }
 
+path_no_git() {
+	find $1 -not -path '*/.git*' -type d
+}
+
+path_home_no_hidden() {
+	find ~ -not -path '*/.*' -type d
+}
+
 goto_folder() {
-	FOLDER=$(find ~ -type d | fzf)
-	cd $FOLDER
+	ME=$(echo $USER)
+	FOLDER=$( {path_home_no_hidden; path_no_git /home/$USER/.dotfiles;} | fzf)
+	if [[ -d $FOLDER ]]; then
+		cd $FOLDER
+		ls -lA
+	fi
 	zle accept-line
 }
 
