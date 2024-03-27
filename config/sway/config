@@ -28,7 +28,7 @@ font pango:monospace 8
 # they are included here as an example. Modify as you see fit.
 
 # start a terminal
-bindsym $mod+Return exec foot
+bindsym $mod+space exec foot
 
 # kill focused window
 bindsym $mod+q kill
