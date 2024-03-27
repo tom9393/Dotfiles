@@ -1,1 +1,25 @@
 # Created by newuser for 5.9
+
+_git_status() {
+	if [[ -d ".git" ]]; then
+		git status
+		zle accept-line
+	fi
+}
+
+open_editor() {
+	$EDITOR
+}
+
+goto_folder() {
+	FOLDER=$(find ~ -type d | fzf)
+	cd $FOLDER
+	zle accept-line
+}
+
+
+zle -N open_editor
+bindkey ^F open_editor
+
+zle -N goto_folder
+bindkey ^G goto_folder
