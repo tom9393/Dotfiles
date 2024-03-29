@@ -7,21 +7,20 @@ _git_status() {
 	fi
 }
 
-open_editor() {
-	$EDITOR
-}
-
 path_no_git() {
-	find $1 -not -path '*/.git*' -type d
+	find $1 -not -path '*/.git*' -type $2
 }
 
 path_home_no_hidden() {
-	find ~ -not -path '*/.*' -type d
+	find ~ -not -path '*/.*' -type $1
+}
+
+get_home_with_hidden() {
+	echo $({path_home_no_hidden $1; path_no_git /home/$USER/.dotfiles $1;} | fzf)
 }
 
 goto_folder() {
-	ME=$(echo $USER)
-	FOLDER=$( {path_home_no_hidden; path_no_git /home/$USER/.dotfiles;} | fzf)
+	FOLDER=$(get_home_with_hidden d)
 	if [[ -d $FOLDER ]]; then
 		cd $FOLDER
 		ls -lA
@@ -29,9 +28,17 @@ goto_folder() {
 	zle accept-line
 }
 
+fzf_editor() {
+	FILE=$(get_home_with_hidden f)
+	if [[ -e $FILE ]]; then
+		$EDITOR $FILE
+	fi
+	zle accept-line
+}
 
-zle -N open_editor
-bindkey ^F open_editor
+
+zle -N fzf_editor
+bindkey ^F fzf_editor
 
 zle -N goto_folder
 bindkey ^G goto_folder
