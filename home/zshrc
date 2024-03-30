@@ -1,4 +1,4 @@
-# Created by newuser for 5.9
+# Zsh stuff
 
 _git_status() {
 	if [[ -d ".git" ]]; then
@@ -7,16 +7,12 @@ _git_status() {
 	fi
 }
 
-path_no_git() {
-	find $1 -not -path '*/.git*' -type $2
-}
-
-path_home_no_hidden() {
-	find ~ -not -path '*/.*' -type $1
-}
-
 get_home_with_hidden() {
-	echo $({path_home_no_hidden $1; path_no_git /home/$USER/.dotfiles $1;} | fzf)
+	if [[ $1 == "f" ]]; then
+		echo $({find ~ -not -path '*/.*' -type $1; find /home/$USER/.dotfiles -not -path '*/.git*' -type $1;} | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')
+	else
+		echo $({find ~ -not -path '*/.*' -type $1; find /home/$USER/.dotfiles -not -path '*/.git*' -type $1;} | fzf --preview 'tree -C {} | head -200')
+	fi
 }
 
 goto_folder() {
@@ -36,9 +32,22 @@ fzf_editor() {
 	zle accept-line
 }
 
+declare -A funs
+funs[f]=fzf_editor
+funs[d]=goto_folder
 
-zle -N fzf_editor
-bindkey ^F fzf_editor
+finder() {
+	echo
+	echo "D - directories"
+	echo "F - files"
+	read -sk CHOICE
+	if [[ -v funs[$CHOICE] ]]; then
+		${funs[$CHOICE]}
+	else
+		echo
+	fi
+	zle accept-line
+}
 
-zle -N goto_folder
-bindkey ^G goto_folder
+zle -N finder
+bindkey ^F finder
