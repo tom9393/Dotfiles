@@ -21,19 +21,29 @@ goto_folder() {
 		cd $FOLDER
 		ls -lA
 	fi
-	zle accept-line
 }
 
-fzf_editor() {
+open_file() {
 	FILE=$(get_home_with_hidden f)
 	if [[ -e $FILE ]]; then
-		$EDITOR $FILE
+		if [[ $FILE =~ \.(png|jpg|jpeg)$ ]]; then
+			echo $FILE
+			kitten icat $FILE 2> /dev/null
+		elif [[ $FILE =~ \.(doc|docx)$ ]]; then
+			if command -v libreoffice &> /dev/null; then
+				libreoffice $FILE &!
+				kill $PPID
+			else
+				echo "Libreoffice not installed, aborting"
+			fi
+		else
+			$EDITOR $FILE
+		fi
 	fi
-	zle accept-line
 }
 
 declare -A funs
-funs[f]=fzf_editor
+funs[f]=open_file
 funs[d]=goto_folder
 
 finder() {
@@ -59,7 +69,6 @@ system_update() {
 }
 
 alias update=system_update
-
 
 zle -N finder
 bindkey ^F finder
