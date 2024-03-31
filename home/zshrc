@@ -49,5 +49,17 @@ finder() {
 	zle accept-line
 }
 
+system_update() {
+	OS=$(cat /etc/os-release | grep ^ID | tr -d ID=)
+	if [[ $OS == "fedora" ]]; then
+		sudo dnf upgrade -y
+	else
+		echo "Unknown OS"
+	fi
+}
+
+alias update=system_update
+
+
 zle -N finder
 bindkey ^F finder
