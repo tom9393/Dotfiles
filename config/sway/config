@@ -27,8 +27,11 @@ font pango:monospace 8
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
-# start a terminal
-bindsym $mod+Return exec foot
+# start kitty
+bindsym $mod+Return exec ~/.local/kitty.app/bin/kitty
+
+# start foot as a backup in case kitty is not installed
+bindsym $mod+BackSpace exec foot
 
 # kill focused window
 bindsym $mod+q kill
