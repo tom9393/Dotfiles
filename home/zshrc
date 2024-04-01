@@ -48,8 +48,8 @@ funs[d]=goto_folder
 
 finder() {
 	echo
-	echo "D - directories"
-	echo "F - files"
+	echo "[D]irectories"
+	echo "[F]iles"
 	read -sk CHOICE
 	if [[ -v funs[$CHOICE] ]]; then
 		${funs[$CHOICE]}
@@ -68,7 +68,15 @@ system_update() {
 	fi
 }
 
+open_editor() {
+	$EDITOR
+	zle accept-line
+}
+
 alias update=system_update
 
 zle -N finder
 bindkey ^F finder
+
+zle -N open_editor
+bindkey '^ ' open_editor

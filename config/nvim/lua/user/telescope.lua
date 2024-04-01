@@ -27,7 +27,7 @@ M.config = function()
         ['<C-d>'] = false,
       },},},}
 
-    pcall(require('telescope').load_extension, 'fzf')
+    require('telescope').load_extension('fzf')
 
     local function find_git_root()
       -- Use the current buffer's path as the starting point for the git search
@@ -74,10 +74,9 @@ M.config = function()
         })
     end
 
-
-    vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
-    vim.api.nvim_create_user_command('LiveGrepOpenFiles', telescope_live_grep_open_files, {})
-    vim.api.nvim_create_user_command('LiveCurrentBuffer', telescope_search_current_buffer, {})
+vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
+vim.api.nvim_create_user_command('LiveGrepOpenFiles', telescope_live_grep_open_files, {})
+vim.api.nvim_create_user_command('LiveCurrentBuffer', telescope_search_current_buffer, {})
 
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
