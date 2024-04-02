@@ -36,6 +36,13 @@ open_file() {
 			else
 				echo "Libreoffice not installed, aborting"
 			fi
+		elif [[ $FILE =~ (pdf)$ ]]; then
+			if command -v firefox &> /dev/null; then
+				firefox $FILE &!
+				kill $PPID
+			else
+				echo "Firefox not installed"
+			fi
 		else
 			$EDITOR $FILE
 		fi
@@ -74,6 +81,10 @@ open_editor() {
 }
 
 alias update=system_update
+
+if command -v kitten &> /dev/null; then
+	alias ssh="kitten ssh"
+fi
 
 zle -N finder
 bindkey ^F finder
