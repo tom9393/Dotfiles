@@ -22,7 +22,7 @@ return {
   {
     -- Theme inspired by Atom
     'navarasu/onedark.nvim',
-    priority = 1000,
+    priority = 500,
     lazy = false,
     config = function()
       require('onedark').setup {
@@ -32,7 +32,12 @@ return {
       require('onedark').load()
     end,
   },
-
+  {
+    'folke/tokyonight.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
