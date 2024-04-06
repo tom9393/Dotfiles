@@ -1,12 +1,16 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# Source powerlevel10k
+source ~/.dotfiles/themes/powerlevel10k/powerlevel10k.zsh-theme
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
 # Zsh stuff
-
-_git_status() {
-	if [[ -d ".git" ]]; then
-		git status
-		zle accept-line
-	fi
-}
-
 get_home_with_hidden() {
 	if [[ $1 == "f" ]]; then
 		echo $({find ~ -not -path '*/.*' -type $1; find /home/$USER/.dotfiles -not -path '*/.git*' -type $1;} | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')
