@@ -6,9 +6,6 @@ require('config')
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
--- Set tab to esc
-vim.keymap.set({ 'i', 'v'}, '<Tab>', '<Esc>', { noremap = true })
-
 -- for easier searching
 vim.keymap.set({ 'n' }, '<C-d>', '?', { noremap = true })
 vim.keymap.set({ 'n' }, '<C-f>', '/', { noremap = true })
