@@ -1,0 +1,6 @@
+local M = {
+  -- Useful plugin to show you pending keybinds.
+  'folke/which-key.nvim', opts = {}
+}
+
+return M
