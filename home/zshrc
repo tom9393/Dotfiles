@@ -15,16 +15,16 @@ fi
 
 ## Zsh stuff ##
 
-get_home_with_hidden() {
+get_home() {
 	if [[ $1 == "f" ]]; then
-		echo $({find ~ -not -path '*/.*' -type $1; find /home/$USER/.dotfiles -not -path '*/.git*' -type $1;} | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')
+		echo $(find ~ -not -path '*/.*' -type $1 | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')
 	else
-		echo $({find ~ -not -path '*/.*' -type $1; find /home/$USER/.dotfiles -not -path '*/.git*' -type $1;} | fzf --preview 'tree -C {} | head -200')
+		echo $(find ~ -not -path '*/.*' -type $1 | fzf --preview 'tree -C {} | head -200')
 	fi
 }
 
 goto_folder() {
-	FOLDER=$(get_home_with_hidden d)
+	FOLDER=$(get_home d)
 	if [[ -d $FOLDER ]]; then
 		cd $FOLDER
 		ls -lA
@@ -32,7 +32,7 @@ goto_folder() {
 }
 
 open_file() {
-	FILE=$(get_home_with_hidden f)
+	FILE=$(get_home f)
 	if [[ -e $FILE ]]; then
 		if [[ $FILE =~ \.(png|jpg|jpeg)$ ]]; then
 			echo $FILE
