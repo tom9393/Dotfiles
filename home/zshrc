@@ -28,6 +28,7 @@ goto_folder() {
 	if [[ -d $FOLDER ]]; then
 		cd $FOLDER
 		ls -lA
+		zle accept-line
 	fi
 }
 
