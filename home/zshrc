@@ -34,44 +34,8 @@ goto_folder() {
 open_file() {
 	FILE=$(get_home f)
 	if [[ -e $FILE ]]; then
-		if [[ $FILE =~ \.(png|jpg|jpeg)$ ]]; then
-			echo $FILE
-			kitten icat $FILE 2> /dev/null
-		elif [[ $FILE =~ \.(doc|docx)$ ]]; then
-			if command -v libreoffice &> /dev/null; then
-				libreoffice $FILE &!
-				kill $PPID
-			else
-				echo "Libreoffice not installed, aborting"
-			fi
-		elif [[ $FILE =~ (pdf)$ ]]; then
-			if command -v firefox &> /dev/null; then
-				firefox $FILE &!
-				kill $PPID
-			else
-				echo "Firefox not installed"
-			fi
-		else
-			$EDITOR $FILE
-		fi
+		$EDITOR $FILE
 	fi
-}
-
-declare -A funs
-funs[f]=open_file
-funs[d]=goto_folder
-
-finder() {
-	echo
-	echo "[D]irectories"
-	echo "[F]iles"
-	read -sk CHOICE
-	if [[ -v funs[$CHOICE] ]]; then
-		${funs[$CHOICE]}
-	else
-		echo
-	fi
-	zle accept-line
 }
 
 system_update() {
@@ -94,8 +58,11 @@ if command -v kitten &> /dev/null; then
 	alias ssh="kitten ssh"
 fi
 
-zle -N finder
-bindkey ^F finder
+zle -N open_file
+bindkey ^F open_file
+
+zle -N goto_folder
+bindkey ^G goto_folder
 
 zle -N open_editor
 bindkey '^ ' open_editor
