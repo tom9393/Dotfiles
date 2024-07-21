@@ -133,8 +133,10 @@ default_border none
 
 # launch brave
 bindsym $mod+w exec --no-startup-id brave-browser
-#launch thunar
+# launch thunar
 bindsym $mod2+z exec --no-startup-id thunar
+# launch anki
+bindsym $mod+e exec --no-startup-id flatpak run net.ankiweb.Anki
 
 # set caps to ctrl and keyboard to british
 input type:keyboard {

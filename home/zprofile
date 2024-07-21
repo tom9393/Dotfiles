@@ -4,5 +4,9 @@ else
 	export EDITOR=$(which nvim)
 fi
 
+export GTK_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export QT_IM_MODULE=fcitx
+
 sleep 1
 redshift -P -O 3500
