@@ -26,8 +26,26 @@ get_home() {
 	fi
 }
 
-goto_folder() {
+get_root() {
+	if [[ $1 == "f" ]]; then
+		echo $(find / -not -path '*/.*' -type $1 | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')
+	else
+		echo $(find / -not -path '*/.*' -type $1 | fzf --preview 'tree -C {} | head -200')
+	fi
+}
+
+
+goto_home() {
 	FOLDER=$(get_home d)
+	if [[ -d $FOLDER ]]; then
+		cd $FOLDER
+		ls -lA
+		zle accept-line
+	fi
+}
+
+goto_root() {
+	FOLDER=$(get_root d)
 	if [[ -d $FOLDER ]]; then
 		cd $FOLDER
 		ls -lA
@@ -65,8 +83,11 @@ fi
 zle -N open_file
 bindkey ^F open_file
 
-zle -N goto_folder
-bindkey ^G goto_folder
+zle -N goto_home
+bindkey ^G goto_home
+
+zle -N goto_root
+bindkey ^H goto_root
 
 zle -N open_editor
 bindkey '^ ' open_editor
