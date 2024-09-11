@@ -112,7 +112,6 @@ local servers = {
   tsserver = {},
   html = { filetypes = { 'html', 'twig', 'hbs'} },
   cssls = {},
-  jdtls = {},
 
   lua_ls = {
     Lua = {
