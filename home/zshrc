@@ -67,6 +67,9 @@ system_update() {
 	else
 		echo "Unknown OS"
 	fi
+	if command -v flatpak &> /dev/null; then
+		sudo flatpak update -y
+	fi
 }
 
 open_editor() {
