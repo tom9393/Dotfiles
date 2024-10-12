@@ -81,6 +81,7 @@ alias update=system_update
 
 if command -v kitten &> /dev/null; then
 	alias ssh="kitten ssh"
+	alias icat="kitten icat"
 fi
 
 zle -N open_file
