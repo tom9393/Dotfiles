@@ -3,3 +3,5 @@
 	email = tomro9393@gmail.com
 [init]
 	defaultBranch = main
+[credential]
+	helper = store
