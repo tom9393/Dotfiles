@@ -18,9 +18,12 @@ local M = {
     },
 }
 
+local ignore_patterns = { "^node_modules/" }
+
 M.config = function()
     require('telescope').setup {
     defaults = {
+      file_ignore_patterns = ignore_patterns,
     mappings = {
       i = {
         ['<C-u>'] = false,
