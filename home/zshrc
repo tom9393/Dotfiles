@@ -20,17 +20,17 @@ fi
 
 get_home() {
 	if [[ $1 == "f" ]]; then
-		echo $(find ~ -not -path '*/.*' -type $1 | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')
+		echo $(find ~ -not -path '*/.*' -not -path '*/node_modules*' -type $1 | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')
 	else
-		echo $(find ~ -not -path '*/.*' -type $1 | fzf --preview 'tree -C {} | head -200')
+		echo $(find ~ -not -path '*/.*' -not -path '*/node_modules*' -type $1 | fzf --preview 'tree -C {} | head -200')
 	fi
 }
 
 get_root() {
 	if [[ $1 == "f" ]]; then
-		echo $(find / -not -path '*/.*' -type $1 | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')
+		echo $(find / -not -path '*/.*' -not -path '*/node_modules*' -type $1 | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')
 	else
-		echo $(find / -not -path '*/.*' -type $1 | fzf --preview 'tree -C {} | head -200')
+		echo $(find / -not -path '*/.*' -not -path '*/node_modules*' -type $1 | fzf --preview 'tree -C {} | head -200')
 	fi
 }
 
