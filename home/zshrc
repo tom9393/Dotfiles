@@ -67,9 +67,6 @@ system_update() {
 	else
 		echo "Unknown OS"
 	fi
-	if command -v flatpak &> /dev/null; then
-		sudo flatpak update -y
-	fi
 }
 
 open_editor() {
@@ -78,6 +75,9 @@ open_editor() {
 }
 
 alias update=system_update
+alias ctlstatus="systemctl status"
+alias ctlup="sudo systemctl start"
+alias ctldown="sudo systemctl stop"
 
 if command -v kitten &> /dev/null; then
 	alias ssh="kitten ssh"

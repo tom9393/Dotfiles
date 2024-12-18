@@ -11,6 +11,12 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n' }, '<C-d>', '?', { noremap = true })
 vim.keymap.set({ 'n' }, '<C-f>', '/', { noremap = true })
 
+vim.keymap.set("n", "<leader><Enter>", function()
+   vim.cmd("cd %:p:h")
+   vim.cmd("terminal")
+   vim.cmd("startinsert")
+end)
+
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -150,3 +156,5 @@ mason_lspconfig.setup_handlers {
 
 local cfg = {}  -- add your config here
 require "lsp_signature".setup(cfg)
+
+require("nvim-tree").setup()

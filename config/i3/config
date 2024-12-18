@@ -156,6 +156,8 @@ bindsym $mod+1 exec --no-startup-id brave-browser
 bindsym $mod2+z exec --no-startup-id thunar
 # launch anki
 bindsym $mod+2 exec --no-startup-id flatpak run net.ankiweb.Anki
+# launch firefox
+bindsym $mod+3 exec --no-startup-id firefox
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
