@@ -78,6 +78,9 @@ alias update=system_update
 alias ctlstatus="systemctl status"
 alias ctlup="sudo systemctl start"
 alias ctldown="sudo systemctl stop"
+alias gcommit="git commit -m"
+alias gall="git add ."
+alias gpush="git push"
 
 if command -v kitten &> /dev/null; then
 	alias ssh="kitten ssh"
