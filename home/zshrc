@@ -81,6 +81,7 @@ alias ctldown="sudo systemctl stop"
 alias gcommit="git commit -m"
 alias gall="git add ."
 alias gpush="git push"
+alias gstatus="git status"
 
 if command -v kitten &> /dev/null; then
 	alias ssh="kitten ssh"
