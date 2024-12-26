@@ -88,6 +88,10 @@ if command -v kitten &> /dev/null; then
 	alias icat="kitten icat"
 fi
 
+if command -v flatpak &> /dev/null; then
+	alias fupdate="flatpak update"
+fi
+
 zle -N open_file
 bindkey ^F open_file
 
