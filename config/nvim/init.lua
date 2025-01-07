@@ -11,11 +11,9 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set({ 'n' }, '<C-d>', '?', { noremap = true })
 vim.keymap.set({ 'n' }, '<C-f>', '/', { noremap = true })
 
-vim.keymap.set("n", "<leader><Enter>", function()
-   vim.cmd("cd %:p:h")
-   vim.cmd("terminal")
-   vim.cmd("startinsert")
-end)
+-- map esc for easier access
+vim.keymap.set({ 'i', 'v' }, '<C-j>', '<Esc>', { noremap = true })
+vim.keymap.set({ 'i', 'v' }, '<C-k>', '<Esc>', { noremap = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })

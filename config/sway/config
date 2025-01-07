@@ -11,6 +11,7 @@
 
 set $mod Mod1
 set $mod2 Mod4
+set $mod3 Mod5
 
 bar {
 	swaybar_command waybar
@@ -28,6 +29,9 @@ font pango:monospace 8
 # they are included here as an example. Modify as you see fit.
 
 # start kitty
+bindsym $mod3+Return exec ~/.local/kitty.app/bin/kitty
+
+# start kitty
 bindsym $mod+Return exec ~/.local/kitty.app/bin/kitty
 
 # start foot as a backup in case kitty is not installed
@@ -35,6 +39,9 @@ bindsym $mod+BackSpace exec foot
 
 # kill focused window
 bindsym $mod+Shift+q kill
+
+# kill focused window
+bindsym $mod3+q kill
 
 # change focus
 bindsym $mod+h focus left
@@ -67,7 +74,7 @@ bindsym $mod+v split h
 bindsym $mod+c split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+shift+f fullscreen toggle
+bindsym $mod3+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 #bindsym $mod+s layout stacking
