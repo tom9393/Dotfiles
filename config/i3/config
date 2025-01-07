@@ -11,6 +11,7 @@
 
 set $mod Mod1
 set $mod2 Mod4
+set $mod3 Mod5
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -46,6 +47,9 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 floating_modifier $mod
 
 # start kitty
+bindsym $mod3+Return exec ~/.local/kitty.app/bin/kitty
+
+# start kitty
 bindsym $mod+Return exec ~/.local/kitty.app/bin/kitty
 
 # start i3 sensible terminal as a backup in case kitty is not installed
@@ -53,6 +57,9 @@ bindsym $mod+BackSpace exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
+
+# kill focused window
+bindsym $mod3+q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+p exec --no-startup-id "dmenu_run -nf '#BBBBBB' -nb '#222222' -sb '#005577' -sf '#EEEEEE' -fn 'monospace-10'"
@@ -93,7 +100,7 @@ bindsym $mod+v split h
 bindsym $mod+c split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+$mod2+f fullscreen toggle
+bindsym $mod3+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 #bindsym $mod+s layout stacking
