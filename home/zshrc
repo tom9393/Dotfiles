@@ -86,10 +86,10 @@ if command -v git &> /dev/null; then
 	alias gstatus="git status"
 fi
 
-if command -v kitten &> /dev/null; then
-	alias ssh="kitten ssh"
-	alias icat="kitten icat"
-fi
+#if command -v kitten &> /dev/null; then
+#	alias ssh="kitten ssh"
+#	alias icat="kitten icat"
+#fi
 
 if command -v flatpak &> /dev/null; then
 	alias fupdate="flatpak update"
