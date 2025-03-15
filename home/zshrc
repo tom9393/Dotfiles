@@ -2,7 +2,7 @@
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+	source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # Hide go path
@@ -18,45 +18,43 @@ fi
 
 ## Zsh stuff ##
 
-get_home() {
-	if [[ $1 == "f" ]]; then
-		echo $(find ~ -not -path '*/.*' -not -path '*/node_modules*' -type $1 | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')
+PATHS=(-path "*/.*" -prune -o -path "*/node_modules*" -prune -o)
+PATHS_ROOT=(-path "*/.*" -prune -o -path "*/node_modules*" -prune -o -path "/dev" -prune -o -path "/boot" -prune -o -path "/proc" -prune -o -path "/root" -prune -o -path "/sys" -prune -o)
+
+get_path() {
+	local type="$1"
+	local base_dir="$2"
+	shift 2  # Remove first two arguments, leaving only PATHS
+
+	if [[ "$type" == "f" ]]; then
+		find "$base_dir" "$@" -type f -print | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'
 	else
-		echo $(find ~ -not -path '*/.*' -not -path '*/node_modules*' -type $1 | fzf --preview 'tree -C {} | head -200')
+		find "$base_dir" "$@" -type d -print | fzf --preview 'tree -C {} | head -200'
 	fi
 }
-
-get_root() {
-	if [[ $1 == "f" ]]; then
-		echo $(find / -not -path '*/.*' -not -path '*/node_modules*' -type $1 | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}')
-	else
-		echo $(find / -not -path '*/.*' -not -path '*/node_modules*' -type $1 | fzf --preview 'tree -C {} | head -200')
-	fi
-}
-
 
 goto_home() {
-	FOLDER=$(get_home d)
+	FOLDER=$(get_path d "/home/$USER" "${PATHS[@]}")
 	if [[ -d $FOLDER ]]; then
-		cd $FOLDER
+		cd $FOLDER || return
 		ls -lA
 		zle accept-line
 	fi
 }
 
 goto_root() {
-	FOLDER=$(get_root d)
+	FOLDER=$(get_path d "/" "${PATHS_ROOT[@]}")
 	if [[ -d $FOLDER ]]; then
-		cd $FOLDER
+		cd $FOLDER || return
 		ls -lA
 		zle accept-line
 	fi
 }
 
 open_file() {
-	FILE=$(get_home f)
+	FILE=$(get_path f "/home/$USER" "${PATHS[@]}")
 	if [[ -e $FILE ]]; then
-		$EDITOR $FILE
+		$EDITOR $FILE || return
 	fi
 }
 
@@ -86,6 +84,7 @@ if command -v git &> /dev/null; then
 	alias gstatus="git status"
 fi
 
+# For whatever reason kitten breaks some ssh connections
 #if command -v kitten &> /dev/null; then
 #	alias ssh="kitten ssh"
 #	alias icat="kitten icat"
