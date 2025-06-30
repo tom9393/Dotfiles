@@ -21,19 +21,32 @@ else
 fi
 
 ## Zsh stuff ##
+PATHS=("*/.*" "*/node_modules*" "/home/$USER/Android*")
+PATHS_ROOT=("${PATHS[@]}" "/dev" "/boot" "/proc" "/root" "/sys")
 
-PATHS=(-path "*/.*" -prune -o -path "*/node_modules*" -prune -o)
-PATHS_ROOT=(-path "*/.*" -prune -o -path "*/node_modules*" -prune -o -path "/dev" -prune -o -path "/boot" -prune -o -path "/proc" -prune -o -path "/root" -prune -o -path "/sys" -prune -o)
+build_find_prune_expr() {
+	local prune_paths=("$@")
+	local expr=()
+
+	for path in "${prune_paths[@]}"; do
+		expr+=(-path "$path" -prune -o)
+	done
+
+	echo "${expr[@]}"
+}
 
 get_path() {
 	local type="$1"
 	local base_dir="$2"
-	shift 2  # Remove first two arguments, leaving only PATHS
+	shift 2
+
+	local prune_expr
+	prune_expr=($(build_find_prune_expr "$@"))
 
 	if [[ "$type" == "f" ]]; then
-		find "$base_dir" "$@" -type f -print | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'
+		find "$base_dir" "${prune_expr[@]}" -type f -print | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'
 	else
-		find "$base_dir" "$@" -type d -print | fzf --preview 'tree -C {} | head -200'
+		find "$base_dir" "${prune_expr[@]}" -type d -print | fzf --preview 'tree -C {} | head -200'
 	fi
 }
 
