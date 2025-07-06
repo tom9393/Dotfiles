@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Select a directory using fzf
-DIR=$(getcurrentdir)
+DIR=$(/home/tom/Dotfiles/scripts/shell/lib/getcurrentdir)
 
 # Calculate total size using du
 SIZE=$(du -sh "$DIR" 2>/dev/null | cut -f1)
