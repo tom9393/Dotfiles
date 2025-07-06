@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Select a directory using fzf
+DIR=$(getcurrentdir)
+
+# Calculate total size using du
+SIZE=$(du -sh "$DIR" 2>/dev/null | cut -f1)
+
+if [[ -n "$SIZE" ]]; then
+  echo "📦 Total size of '$DIR': $SIZE"
+else
+  echo "❌ Failed to calculate size."
+fi
+

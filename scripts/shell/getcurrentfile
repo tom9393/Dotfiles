@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Select file or directory with fzf
+FILE=$(find "$PWD" -print 2>/dev/null | fzf)
+
+if [[ -z "$FILE" ]]; then
+  echo "No file or directory selected."
+  exit 1
+fi
+
+echo $FILE

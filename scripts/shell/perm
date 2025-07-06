@@ -1,0 +1,36 @@
+#!/bin/bash
+
+is_valid_permission() {
+  [[ "$1" =~ ^[0-7]$ ]]
+}
+
+FILE=$(getcurrentfile)
+
+echo "1 - Execute"
+echo "2 - Write"
+echo "4 - Read"
+
+# Prompt and validate user permission
+read -p "Permission for user (0-7): " USER_PERMISSION
+if ! is_valid_permission "$USER_PERMISSION"; then
+  echo "Invalid permission for user. Must be a number between 0 and 7."
+  exit 1
+fi
+
+# Prompt and validate group permission
+read -p "Permission for group (0-7): " GROUP_PERMISSION
+if ! is_valid_permission "$GROUP_PERMISSION"; then
+  echo "Invalid permission for group. Must be a number between 0 and 7."
+  exit 1
+fi
+
+# Prompt and validate others permission
+read -p "Permission for others (0-7): " ALL_PERMISSION
+if ! is_valid_permission "$ALL_PERMISSION"; then
+  echo "Invalid permission for all. Must be a number between 0 and 7."
+  exit 1
+fi
+
+PERM="${USER_PERMISSION}${GROUP_PERMISSION}${ALL_PERMISSION}"
+chmod "$PERM" "$FILE"
+echo "✅ Permission $PERM has been set for $FILE"

@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Select file or directory with fzf
+FILE=$(getcurrentfile)
+
+# Prompt for new owner username (optional)
+read -p "Enter new owner username (leave blank to skip): " NEW_USER
+if [[ -n "$NEW_USER" ]]; then
+  if ! id -u "$NEW_USER" &>/dev/null; then
+    echo "Error: User '$NEW_USER' does not exist."
+    exit 1
+  fi
+fi
+
+# Prompt for new group name (optional)
+read -p "Enter new group name (leave blank to skip): " NEW_GROUP
+if [[ -n "$NEW_GROUP" ]]; then
+  if ! getent group "$NEW_GROUP" &>/dev/null; then
+    echo "Error: Group '$NEW_GROUP' does not exist."
+    exit 1
+  fi
+fi
+
+# Ensure at least one of user or group is provided
+if [[ -z "$NEW_USER" && -z "$NEW_GROUP" ]]; then
+  echo "Error: You must enter at least a user or a group."
+  exit 1
+fi
+
+# Build owner spec for chown
+if [[ -n "$NEW_USER" && -n "$NEW_GROUP" ]]; then
+  OWNER_SPEC="$NEW_USER:$NEW_GROUP"
+elif [[ -n "$NEW_USER" ]]; then
+  OWNER_SPEC="$NEW_USER"
+else
+  OWNER_SPEC=":$NEW_GROUP"
+fi
+
+# Determine if sudo is needed
+if [[ $EUID -ne 0 ]]; then
+  if ! command -v sudo &>/dev/null; then
+    echo "Error: sudo is required but not installed."
+    exit 1
+  fi
+  CMD="sudo chown"
+else
+  CMD="chown"
+fi
+
+# Apply ownership change
+$CMD "$OWNER_SPEC" "$FILE"
+
+if [[ $? -eq 0 ]]; then
+  echo "✅ Ownership of '$FILE' changed to '$OWNER_SPEC'"
+else
+  echo "❌ Failed to change ownership of '$FILE'"
+fi
+

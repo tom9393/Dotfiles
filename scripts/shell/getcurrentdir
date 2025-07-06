@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Select a directory using fzf
+DIR=$(find "$PWD" -type d -print 2>/dev/null | fzf)
+
+if [[ -z "$DIR" ]]; then
+  echo "No directory selected."
+  exit 1
+fi
+
+echo $DIR
