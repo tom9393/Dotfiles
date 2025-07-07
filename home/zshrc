@@ -80,21 +80,11 @@ open_file() {
 	fi
 }
 
-system_update() {
-	OS=$(cat /etc/os-release | grep ^ID | tr -d ID=)
-	if [[ $OS == "fedora" ]]; then
-		sudo dnf upgrade -y
-	else
-		echo "Unknown OS"
-	fi
-}
-
 open_editor() {
 	$EDITOR
 	zle accept-line
 }
 
-alias update=system_update
 alias ctlstatus="systemctl status"
 alias ctlup="sudo systemctl start"
 alias ctldown="sudo systemctl stop"
@@ -104,16 +94,6 @@ if command -v git &> /dev/null; then
 	alias gall="git add ."
 	alias gpush="git push"
 	alias gstatus="git status"
-fi
-
-# For whatever reason kitten breaks some ssh connections
-#if command -v kitten &> /dev/null; then
-#	alias ssh="kitten ssh"
-#	alias icat="kitten icat"
-#fi
-
-if command -v flatpak &> /dev/null; then
-	alias fupdate="flatpak update"
 fi
 
 zle -N open_file

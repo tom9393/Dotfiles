@@ -135,12 +135,6 @@ default_border none
 
 # launch brave
 bindsym $mod+1 exec --no-startup-id brave-browser
-# launch thunar
-bindsym $mod2+z exec --no-startup-id thunar
-# launch anki
-bindsym $mod+2 exec --no-startup-id flatpak run net.ankiweb.Anki
-# launch firefox
-bindsym $mod+3 exec --no-startup-id firefox
 
 # set caps to ctrl and keyboard to british
 input type:keyboard {
@@ -151,3 +145,6 @@ input type:keyboard {
 # Turn screen on and off
 bindsym $mod2+m output * dpms off
 bindsym $mod2+n output * dpms on
+
+# mute
+bindsym $mod3+m exec --no-startup-id /home/tom/Dotfiles/scripts/shell/mute

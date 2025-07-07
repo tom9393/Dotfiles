@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+if command -v amixer &> /dev/null; then
+	amixer sset Master $1% &> /dev/null
+	echo "Volume set to $1%"
+else
+	echo "Amixer not installed"
+	exit 1
+fi

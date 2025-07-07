@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+if command -v amixer &> /dev/null; then
+	amixer sset Master toggle &> /dev/null
+	echo "Toggle mute/unmute"
+else
+	echo "Amixer not installed"
+	exit 1
+fi

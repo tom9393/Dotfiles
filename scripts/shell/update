@@ -1,0 +1,9 @@
+#!/bin/bash
+
+OS=$(cat /etc/os-release | grep ^ID | tr -d ID=)
+if [[ $OS == "fedora" ]]; then
+	sudo dnf upgrade -y
+else
+	echo "Unknown OS, aborting"
+	exit 1
+fi
