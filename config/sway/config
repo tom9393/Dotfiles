@@ -40,9 +40,6 @@ bindsym $mod+BackSpace exec foot
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# kill focused window
-bindsym $mod3+q kill
-
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down

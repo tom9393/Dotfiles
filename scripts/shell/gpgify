@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Check for input
+if [[ -z "$1" ]]; then
+  echo "Usage: $0 <file>"
+  exit 1
+fi
+
+FILE="$1"
+
+# Check if file exists
+if [[ ! -f "$FILE" ]]; then
+  echo "Error: File '$FILE' does not exist."
+  exit 1
+fi
+
+# If the file ends with .gpg → decrypt
+if [[ "$FILE" == *.gpg ]]; then
+  OUTFILE="${FILE%.gpg}"
+  echo "🔓 Decrypting '$FILE' → '$OUTFILE'..."
+  gpg --output "$OUTFILE" --decrypt "$FILE"
+  if [[ $? -eq 0 ]]; then
+    echo "✅ Decryption successful."
+  else
+    echo "❌ Decryption failed."
+  fi
+else
+  echo "🔒 Encrypting '$FILE' → '${FILE}.gpg'..."
+  gpg --symmetric --cipher-algo AES256 "$FILE"
+  if [[ $? -eq 0 ]]; then
+    echo "✅ Encryption successful: ${FILE}.gpg"
+  else
+    echo "❌ Encryption failed."
+  fi
+fi
+

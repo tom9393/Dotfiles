@@ -1,0 +1,44 @@
+#!/bin/bash
+
+if [[ -z "$1" ]]; then
+  echo "Usage: $0 <file-or-archive>"
+  exit 1
+fi
+
+INPUT="$1"
+
+if [[ ! -e "$INPUT" ]]; then
+  echo "Error: File '$INPUT' does not exist."
+  exit 1
+fi
+
+compress_file() {
+  local file="$1"
+  local base=$(basename "$file")
+  local tarname="${base}.tar.gz"
+
+  tar -czf "$tarname" "$file"
+  if [[ $? -eq 0 ]]; then
+    echo "✅ Compressed to $tarname"
+  else
+    echo "❌ Failed to compress $file"
+  fi
+}
+
+extract_file() {
+  local archive="$1"
+  tar -xzf "$archive" 2>/dev/null || tar -xf "$archive"
+
+  if [[ $? -eq 0 ]]; then
+    echo "✅ Extracted $archive"
+  else
+    echo "❌ Failed to extract $archive"
+  fi
+}
+
+if [[ "$INPUT" == *.tar.gz || "$INPUT" == *.tgz || "$INPUT" == *.tar ]]; then
+  extract_file "$INPUT"
+else
+  compress_file "$INPUT"
+fi
+

@@ -76,6 +76,7 @@ goto_root() {
 open_file() {
 	FILE=$(get_path f "/home/$USER" "${PATHS[@]}")
 	if [[ -e $FILE ]]; then
+		cd $(dirname $FILE)
 		$EDITOR $FILE || return
 	fi
 }

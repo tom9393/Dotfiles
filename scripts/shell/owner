@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Select file or directory with fzf
-FILE=$(/home/tom/Dotfiles/scripts/shell/lib/getcurrentfile)
+FILE=$1
 
 # Prompt for new owner username (optional)
 read -p "Enter new owner username (leave blank to skip): " NEW_USER
