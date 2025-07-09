@@ -1,0 +1,17 @@
+
+if command -v systemctl &> /dev/null; then
+	alias ctlstatus="systemctl status"
+	alias ctlup="sudo systemctl start"
+	alias ctldown="sudo systemctl stop"
+fi
+
+
+if command -v git &> /dev/null; then
+	alias gcommit="git commit -m"
+	alias gall="git add ."
+	alias gpush="git push"
+	alias gstatus="git status"
+fi
+
+alias weather="python /home/tom/Dotfiles/scripts/python/weather.py"
+alias electricity="python /home/tom/Dotfiles/scripts/python/electricity.py"

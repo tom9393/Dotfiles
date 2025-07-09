@@ -1,0 +1,60 @@
+PATHS=("*/.*" "*/node_modules*" "/home/$USER/Android/*")
+PATHS_ROOT=("${PATHS[@]}" "/dev" "/boot" "/proc" "/root" "/sys")
+
+build_find_prune_expr() {
+	local prune_paths=("$@")
+	local expr=()
+
+	for path in "${prune_paths[@]}"; do
+		expr+=(-path "$path" -prune -o)
+	done
+
+	echo "${expr[@]}"
+}
+
+get_path() {
+	local type="$1"
+	local base_dir="$2"
+	shift 2
+
+	local prune_expr
+	prune_expr=($(build_find_prune_expr "$@"))
+
+	if [[ "$type" == "f" ]]; then
+		find "$base_dir" "${prune_expr[@]}" -type f -print | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'
+	else
+		find "$base_dir" "${prune_expr[@]}" -type d -print | fzf --preview 'tree -C {} | head -200'
+	fi
+}
+
+goto_home() {
+	FOLDER=$(get_path d "/home/$USER" "${PATHS[@]}")
+	if [[ -d $FOLDER ]]; then
+		cd $FOLDER || return
+		ls -lA
+		zle accept-line
+	fi
+}
+
+goto_root() {
+	FOLDER=$(get_path d "/" "${PATHS_ROOT[@]}")
+	if [[ -d $FOLDER ]]; then
+		cd $FOLDER || return
+		ls -lA
+		zle accept-line
+	fi
+}
+
+open_file() {
+	FILE=$(get_path f "/home/$USER" "${PATHS[@]}")
+	if [[ -e $FILE ]]; then
+		cd $(dirname $FILE)
+		$EDITOR $FILE || return
+		zle accept-line
+	fi
+}
+
+open_editor() {
+	$EDITOR
+	zle accept-line
+}

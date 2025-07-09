@@ -5,18 +5,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 	source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Script paths
-export PATH=$PATH:/$HOME/Dotfiles/scripts/shell
-
-# Hide go path
-GOLOCATION=$HOME/.go
-if [[ -d $GOLOCATION ]]; then
-	export GOPATH=$GOLOCATION
-fi
-
-# .so path
-export LD_LIBRARY_PATH=/usr/lib
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 if [[ -d ~/powerlevel10k ]]; then
@@ -25,77 +13,22 @@ else
 	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k && source ~/powerlevel10k/powerlevel9k.zsh-theme
 fi
 
-## Zsh stuff ##
-PATHS=("*/.*" "*/node_modules*" "/home/$USER/Android/*")
-PATHS_ROOT=("${PATHS[@]}" "/dev" "/boot" "/proc" "/root" "/sys")
-
-build_find_prune_expr() {
-	local prune_paths=("$@")
-	local expr=()
-
-	for path in "${prune_paths[@]}"; do
-		expr+=(-path "$path" -prune -o)
-	done
-
-	echo "${expr[@]}"
-}
-
-get_path() {
-	local type="$1"
-	local base_dir="$2"
-	shift 2
-
-	local prune_expr
-	prune_expr=($(build_find_prune_expr "$@"))
-
-	if [[ "$type" == "f" ]]; then
-		find "$base_dir" "${prune_expr[@]}" -type f -print | fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'
-	else
-		find "$base_dir" "${prune_expr[@]}" -type d -print | fzf --preview 'tree -C {} | head -200'
-	fi
-}
-
-goto_home() {
-	FOLDER=$(get_path d "/home/$USER" "${PATHS[@]}")
-	if [[ -d $FOLDER ]]; then
-		cd $FOLDER || return
-		ls -lA
-		zle accept-line
-	fi
-}
-
-goto_root() {
-	FOLDER=$(get_path d "/" "${PATHS_ROOT[@]}")
-	if [[ -d $FOLDER ]]; then
-		cd $FOLDER || return
-		ls -lA
-		zle accept-line
-	fi
-}
-
-open_file() {
-	FILE=$(get_path f "/home/$USER" "${PATHS[@]}")
-	if [[ -e $FILE ]]; then
-		cd $(dirname $FILE)
-		$EDITOR $FILE || return
-	fi
-}
-
-open_editor() {
-	$EDITOR
-	zle accept-line
-}
-
-alias ctlstatus="systemctl status"
-alias ctlup="sudo systemctl start"
-alias ctldown="sudo systemctl stop"
-
-if command -v git &> /dev/null; then
-	alias gcommit="git commit -m"
-	alias gall="git add ."
-	alias gpush="git push"
-	alias gstatus="git status"
+# Hide go path
+GOLOCATION=$HOME/.go
+if [[ -d $GOLOCATION ]]; then
+	export GOPATH=$GOLOCATION
 fi
+
+THIS=$HOME/Dotfiles/
+
+# Script paths
+export PATH=$PATH:$THIS/scripts/shell
+
+# .so path
+export LD_LIBRARY_PATH=/usr/lib
+
+source $THIS/scripts/shell/functions/functions
+source $THIS/home/aliases
 
 zle -N open_file
 bindkey ^F open_file
