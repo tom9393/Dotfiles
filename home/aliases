@@ -13,5 +13,9 @@ if command -v git &> /dev/null; then
 	alias gstatus="git status"
 fi
 
+if command -v fastfetch &> /dev/null; then
+	alias ff="fastfetch"
+fi
+
 alias weather="python /home/tom/Dotfiles/scripts/python/weather.py"
 alias electricity="python /home/tom/Dotfiles/scripts/python/electricity.py"
