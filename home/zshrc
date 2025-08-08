@@ -19,10 +19,13 @@ if [[ -d $GOLOCATION ]]; then
 	export GOPATH=$GOLOCATION
 fi
 
-THIS=$HOME/Dotfiles/
+THIS=$HOME/Dotfiles
 
 # Script paths
 export PATH=$PATH:$THIS/scripts/shell
+
+# Local bin path
+export PATH=$PATH:/home/tom/.local/bin
 
 # .so path
 export LD_LIBRARY_PATH=/usr/lib
