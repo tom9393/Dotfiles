@@ -98,7 +98,14 @@ vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin, { desc =
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 
 -- Other
-vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
+vim.keymap.set("n", "<leader>sr", function()
+  require('telescope.builtin').lsp_references({
+    show_line = true,       -- preview line in picker
+    include_declaration = true, -- include the symbol's declaration
+    fname_width = 60,       -- optional: adjust filename width
+    trim_text = true,       -- optional: remove extra whitespace
+  })
+end, { desc = "Telescope LSP References" })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
