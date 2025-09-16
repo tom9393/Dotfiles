@@ -84,9 +84,9 @@ def build_chart(data):
         tag_str = "  " + " ".join(tags) if tags else ""
 
         if dt.hour == now.hour and dt.date() == now.date():
-            print(cyan(f"{time_str} - {price:<5.2f}€ {bar}{tag_str}"))
+            print(cyan(f"{time_str} - {price:<5.2f} {bar}{tag_str}"))
         else:
-            print(f"{time_str} - {price:<5.2f}€ {bar}{tag_str}")
+            print(f"{time_str} - {price:<5.2f} {bar}{tag_str}")
 
 # Run the script
 data = load_data()
