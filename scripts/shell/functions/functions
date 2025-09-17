@@ -31,7 +31,6 @@ goto_home() {
 	FOLDER=$(get_path d "/home/$USER" "${PATHS[@]}")
 	if [[ -d $FOLDER ]]; then
 		cd $FOLDER || return
-		ls -lA
 		zle accept-line
 	fi
 }
@@ -40,7 +39,6 @@ goto_root() {
 	FOLDER=$(get_path d "/" "${PATHS_ROOT[@]}")
 	if [[ -d $FOLDER ]]; then
 		cd $FOLDER || return
-		ls -lA
 		zle accept-line
 	fi
 }
