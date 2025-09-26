@@ -21,3 +21,5 @@ alias weather="python /home/tom/Dotfiles/scripts/python/weather.py"
 alias electricity="python /home/tom/Dotfiles/scripts/python/electricity.py"
 
 alias sl=ls
+
+alias icat="kitten icat"
