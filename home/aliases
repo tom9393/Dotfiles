@@ -11,6 +11,8 @@ if command -v git &> /dev/null; then
 	alias gall="git add ."
 	alias gpush="git push"
 	alias gstatus="git status"
+	alias gfetch="git fetch"
+	alias gmerge="git merge"
 fi
 
 if command -v fastfetch &> /dev/null; then
