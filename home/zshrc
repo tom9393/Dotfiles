@@ -25,7 +25,7 @@ THIS=$HOME/Dotfiles
 export PATH=$PATH:$THIS/scripts/shell
 
 # Local bin path
-export PATH=$PATH:/home/tom/.local/bin
+export PATH=$PATH:/home/$USER/.local/bin
 
 # .so path
 export LD_LIBRARY_PATH=/usr/lib
