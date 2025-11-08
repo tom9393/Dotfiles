@@ -1,8 +1,11 @@
 #!/bin/bash
 
 OS=$(cat /etc/os-release | grep ^ID | tr -d ID=)
+
 if [[ $OS == "fedora" ]]; then
-	sudo dnf upgrade -y
+	sudo dnf upgrade
+elif [[ $OS == "arch" ]]; then
+	sudo pacman -Syu
 else
 	echo "Unknown OS, aborting"
 	exit 1
