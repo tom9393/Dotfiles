@@ -1,10 +1,12 @@
 #!/bin/bash
 
-
-if command -v amixer &> /dev/null; then
+if command -v pactl &> /dev/null; then
+	pactl set-sink-mute @DEFAULT_SINK@ toggle
+	echo "Toggle mute/unmute using Pactl"
+elif command -v amixer &> /dev/null; then
 	amixer sset Master toggle &> /dev/null
-	echo "Toggle mute/unmute"
+	echo "Toggle mute/unmute using Amixer"
 else
-	echo "Amixer not installed"
+	echo "Could not find way to control sound"
 	exit 1
 fi
