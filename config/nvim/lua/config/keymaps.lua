@@ -1,19 +1,20 @@
-local M = {
-    -- LSP Configuration & Plugins
-    'neovim/nvim-lspconfig',
-    dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
-      { 'williamboman/mason.nvim', config = true },
-      'williamboman/mason-lspconfig.nvim',
+-- [[ Basic Keymaps ]]
 
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+-- Keymaps for better default experience
+-- See `:help vim.keymap.set()`
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
-      -- Additional lua configuration, makes nvim stuff amazing!
-      'folke/neodev.nvim',
-    },
-}
+-- for easier searching
+vim.keymap.set({ 'n' }, '<C-d>', '?', { noremap = true })
+vim.keymap.set({ 'n' }, '<C-f>', '/', { noremap = true })
+
+-- map esc for easier access
+vim.keymap.set({ 'i', 'v' }, '<C-j>', '<Esc>', { noremap = true })
+vim.keymap.set({ 'i', 'v' }, '<C-k>', '<Esc>', { noremap = true })
+
+-- Remap for dealing with word wrap
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 local keymap = vim.keymap.set
 local lsp = vim.lsp
@@ -36,5 +37,3 @@ keymap("v", "<C-k>", ":m '<-2<CR>gv=gv", opt("Move selection up"))
 
 keymap("i", "<C-s>", "<Esc>", opt("Exit to normal mode"))
 keymap("v", "<C-s>", "<Esc>", opt("Exit to normal mode"))
-
-return M
