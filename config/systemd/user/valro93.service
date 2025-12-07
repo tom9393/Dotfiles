@@ -1,0 +1,18 @@
+[Unit]
+Description=RClone Mount for valro93
+After=network-online.target
+Wants=network-online.target
+
+ConditionPathIsDirectory=/mnt/valro93
+
+[Service]
+Type=notify
+# Check where your rclone is with `which rclone` and update path if needed
+ExecStart=/usr/bin/rclone mount valro93: /mnt/valro93 --config=%h/.config/rclone/rclone.conf --vfs-cache-mode writes --no-modtime
+    
+# Restart the mount if it crashes
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target
