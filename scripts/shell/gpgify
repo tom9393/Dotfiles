@@ -1,36 +1,42 @@
 #!/bin/bash
 
-# Check for input
-if [[ -z "$1" ]]; then
-  echo "Usage: $0 <file>"
-  exit 1
+KEY_FILE="/home/$USER/.gpg_key"
+
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $0 <file>"
+    exit 1
 fi
 
 FILE="$1"
 
-# Check if file exists
+if [[ ! -f "$KEY_FILE" ]]; then
+  echo "Error: Key '$KEY_FILE' does not exist."
+  exit 1
+fi
+
 if [[ ! -f "$FILE" ]]; then
   echo "Error: File '$FILE' does not exist."
   exit 1
 fi
 
-# If the file ends with .gpg → decrypt
+KEY=$(cat "$KEY_FILE")
+
 if [[ "$FILE" == *.gpg ]]; then
-  OUTFILE="${FILE%.gpg}"
-  echo "🔓 Decrypting '$FILE' → '$OUTFILE'..."
-  gpg --output "$OUTFILE" --decrypt "$FILE"
+  OUT="${FILE%.gpg}"
+  echo "🔓 Decrypting '$FILE' → '$OUT'..."
+  gpg --batch --yes --passphrase "$KEY" -o "$OUT" -d "$FILE"
   if [[ $? -eq 0 ]]; then
     echo "✅ Decryption successful."
   else
     echo "❌ Decryption failed."
   fi
 else
+  OUT="${FILE}.gpg"
   echo "🔒 Encrypting '$FILE' → '${FILE}.gpg'..."
-  gpg --symmetric --cipher-algo AES256 "$FILE"
+  gpg --symmetric --cipher-algo AES256 --batch --yes --passphrase "$KEY" -o "$OUT" "$FILE"
   if [[ $? -eq 0 ]]; then
     echo "✅ Encryption successful: ${FILE}.gpg"
   else
     echo "❌ Encryption failed."
   fi
 fi
-
