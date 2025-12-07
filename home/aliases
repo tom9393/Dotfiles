@@ -24,6 +24,7 @@ alias electricity="python /home/tom/Dotfiles/scripts/python/electricity.py"
 
 alias ls="ls --color=auto"
 alias sl=ls
-alias ll="ls -lah"
+alias ll="ls -lh"
+alias lll="ls -lah"
 
 alias icat="kitten icat"
