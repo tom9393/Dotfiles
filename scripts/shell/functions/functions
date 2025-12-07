@@ -1,4 +1,4 @@
-PATHS=("*/.*" "*/node_modules*" "/home/$USER/Android/*")
+PATHS=("*/.*" "*/node_modules*" "/home/$USER/Android/*" "*/build*")
 PATHS_ROOT=("${PATHS[@]}" "/dev" "/boot" "/proc" "/root" "/sys")
 
 build_find_prune_expr() {
