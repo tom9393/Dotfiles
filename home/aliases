@@ -27,4 +27,6 @@ alias sl=ls
 alias ll="ls -lh"
 alias lll="ls -lah"
 
+alias poweroff="systemctl poweroff"
+
 alias icat="kitten icat"
