@@ -1,0 +1,51 @@
+#!/bin/bash
+
+if [[ -z "$1" ]]; then
+  echo "Usage: $0 <file-or-directory>"
+  exit 1
+fi
+
+INPUT="$1"
+
+if [[ ! -e "$INPUT" ]]; then
+  echo "Error: File or directory '$INPUT' does not exist."
+  exit 1
+fi
+
+compress_xz() {
+  local file="$1"
+  local base=$(basename "$file")
+  local tarname="${base}.tar.xz"
+
+  echo "📦 Compressing $file using XZ (this may take a moment)..."
+  
+  # -c: Create, -J: XZ compression, -f: filename
+  tar -cJf "$tarname" "$file"
+
+  if [[ $? -eq 0 ]]; then
+    echo "✅ Compressed to $tarname"
+  else
+    echo "❌ Failed to compress $file"
+  fi
+}
+
+extract_xz() {
+  local archive="$1"
+  echo "🔓 Extracting $archive..."
+  
+  # Modern tar handles XZ automatically with -xf
+  tar -xf "$archive"
+
+  if [[ $? -eq 0 ]]; then
+    echo "✅ Extracted $archive"
+  else
+    echo "❌ Failed to extract $archive"
+  fi
+}
+
+# Logic to determine action
+if [[ "$INPUT" == *.tar.xz || "$INPUT" == *.txz ]]; then
+  extract_xz "$INPUT"
+else
+  compress_xz "$INPUT"
+fi
