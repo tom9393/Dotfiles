@@ -1,8 +1,14 @@
 #!/bin/bash
 
+device_mac="00:A4:1C:A7:F1:A3"
+
 if command -v bluetoothctl &> /dev/null; then
-	bluetoothctl connect 00:A4:1C:A7:F1:A3
+	if [[ $(bluetoothctl devices Connected) == *$device_mac* ]]; then
+		bluetoothctl disconnect $device_mac
+	else
+		bluetoothctl connect $device_mac
+	fi
 else
-	echo "No bluetoothctl found"
+	echo "No bluetoothctl found, aborting.."
 	exit 1
 fi
