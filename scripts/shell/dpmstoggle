@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if ! command -v hyprctl &> /dev/null; then
+    echo "No hyprctl, cannot execute"
+    exit 1
+fi
+
+if hyprctl monitors | grep -q "dpmsStatus: 1"; then
+    hyprctl dispatch dpms off
+else
+    hyprctl dispatch dpms on
+fi
