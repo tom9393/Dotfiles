@@ -33,6 +33,9 @@ export LD_LIBRARY_PATH=/usr/lib
 source $THIS/scripts/shell/functions/functions
 source $THIS/home/aliases
 
+# Android path
+export ANDROID_AVD_HOME=~/.config/.android/avd
+
 zle -N open_file
 bindkey ^F open_file
 
