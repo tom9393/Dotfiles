@@ -6,7 +6,7 @@ if ! command -v hyprctl &> /dev/null; then
 fi
 
 if hyprctl monitors | grep -q "dpmsStatus: 1"; then
-    hyprctl dispatch dpms off
+    hyprctl dispatch 'hl.dsp.dpms({ action = "disable" })'
 else
-    hyprctl dispatch dpms on
+    hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })'
 fi
