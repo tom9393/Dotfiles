@@ -33,6 +33,11 @@ export LD_LIBRARY_PATH=/usr/lib
 source $THIS/scripts/shell/functions/functions
 source $THIS/home/aliases
 
+# Android
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
 # Android path
 export ANDROID_AVD_HOME=~/.config/.android/avd
 
