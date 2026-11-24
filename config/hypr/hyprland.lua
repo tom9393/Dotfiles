@@ -19,7 +19,7 @@ hl.monitor({
     output   = "",
     mode     = "preferred",
     position = "auto",
-    scale    = "1",
+    scale    = 1.0,
 })
 
 
@@ -104,7 +104,7 @@ hl.config({
 
     decoration = {
         rounding       = 0,
-        rounding_power = 0,
+        rounding_power = 1,
 
         -- Change transparency of focused and unfocused windows
         active_opacity   = 1.0,
@@ -254,6 +254,7 @@ local mainMod = "ALT" -- Sets "Alt" key as main modifier
 local secondMod = "SUPER" -- Sets "Windows" key as secondary modifier
 
 hl.bind(secondMod .. " + V", hl.dsp.exec_cmd("/home/tom/Dotfiles/scripts/shell/dpmstoggle"))
+hl.bind(secondMod .. " + H", hl.dsp.exec_cmd("/home/tom/Dotfiles/scripts/shell/wf-c510"))
 hl.bind("Print", hl.dsp.exec_cmd('geometry=$(slurp) && grim -g "$geometry"'))
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
@@ -370,7 +371,7 @@ hl.window_rule({
     float = true,
 })
 -- Fuck Nvidia
-hl.env("LIBVA_DRIVER_NAME", "nvidia")
-hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
-hl.env("__GL_VRR_ALLOWED", "1")
-hl.env("WLR_DRM_NO_ATOMIC", "1")
+--hl.env("LIBVA_DRIVER_NAME", "nvidia")
+--hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
+--hl.env("__GL_VRR_ALLOWED", "1")
+--hl.env("WLR_DRM_NO_ATOMIC", "1")

@@ -1,12 +1,26 @@
 #!/bin/bash
 
-if ! command -v hyprctl &> /dev/null; then
-    echo "No hyprctl, cannot execute"
-    exit 1
-fi
+if [ -n "$SWAYSOCK" ]; then
+    POWER_STATE=$(swaymsg -t get_outputs | python3 -c 'import sys, json; outputs = json.load(sys.stdin); print(next((o.get("power") for o in outputs if o.get("name") == "DP-1"), ""))')
+    
+    if [ "$POWER_STATE" = "True" ]; then
+        sleep 1
+        swaymsg "output DP-1 power off"
+    else
+        swaymsg "output DP-1 power on"
+    fi
+elif [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+    if ! command -v hyprctl &> /dev/null; then
+        echo "No hyprctl, cannot execute"
+        exit 1
+    fi
 
-if hyprctl monitors | grep -q "dpmsStatus: 1"; then
-    hyprctl dispatch 'hl.dsp.dpms({ action = "disable" })'
+    if hyprctl monitors | grep -q "dpmsStatus: 1"; then
+        hyprctl dispatch 'hl.dsp.dpms({ action = "disable" })'
+    else
+        hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })'
+    fi
 else
-    hyprctl dispatch 'hl.dsp.dpms({ action = "enable" })'
+    echo "Neither Sway nor Hyprland session detected"
+    exit 1
 fi
